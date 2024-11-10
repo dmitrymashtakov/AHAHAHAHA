@@ -1,7 +1,17 @@
 #include "cipher.h"
-cipher::cipher(int key)
-{
-	if(!isPlusKey(key)) {
+#include <stdexcept> 
+#include <limits>
+cipher::cipher(int key) {
+	string z = to_string(key);
+    if (z.empty()) {
+        throw cipher_error("Empty Key");
+    }
+    for (char c : z) {
+        if (!isdigit(c)) {
+            throw cipher_error("Key beZ bukv");
+        }
+    }
+    if (!isPlusKey(key)) {
         throw cipher_error("Key nekorrekten");
     }
     stolb = key;
